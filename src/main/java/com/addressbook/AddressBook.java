@@ -1,13 +1,27 @@
 package com.addressbook;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /*@Description-Creating a Address Book.
 * Welcome to address book.
-* Contacts are created. */
+* Contacts are created.
+* Add a new contacts into a address book. */
 public class AddressBook {
-    public static void main(String[] args) {
-        System.out.println("Welcome to address book");
+    public List<Contacts> contactList;
 
-        Contacts contact = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899, "abc@gmail.com");
-        System.out.println(contact.toString());
+    /* @Description - Add new contacts to the address book  */
+
+    public boolean addContacts(Contacts contacts) {
+        System.out.println(contacts);
+        List<Contacts> contactList = new ArrayList<>();
+        try {
+            contactList.add(contacts);
+            System.out.println(contactList);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
