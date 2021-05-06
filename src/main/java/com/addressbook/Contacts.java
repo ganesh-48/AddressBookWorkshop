@@ -1,16 +1,16 @@
 package com.addressbook;
 
 public class Contacts {
-    private String firstName;
-    private String lastName;
-    private String address;
-    private String city;
-    private String state;
-    private int zip;
-    private long number;
-    private String email;
+    public String firstName;
+    public String lastName;
+    public String address;
+    public String city;
+    public String state;
+    public int zip;
+    public long phoneNumber;
+    public String email;
 
-    public Contacts(String firstName, String lastName, String address, String city, String state, int zip, long number,
+    public Contacts(String firstName, String lastName, String address, String city, String state, int zip, long phoneNumber,
                     String email) {
         super();
         this.firstName = firstName;
@@ -19,7 +19,7 @@ public class Contacts {
         this.city = city;
         this.state = state;
         this.zip = zip;
-        this.number = number;
+        this.phoneNumber = phoneNumber;
         this.email = email;
     }
 
@@ -71,12 +71,12 @@ public class Contacts {
         this.zip = zip;
     }
 
-    public long getNumber() {
-        return number;
+    public long getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setNumber(long number) {
-        this.number = number;
+    public void setPhoneNumber(long phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {
@@ -90,7 +90,7 @@ public class Contacts {
     @Override
     public String toString() {
         // TODO Auto-generated method stub
-        return this.firstName + " " + this.lastName + ":" + this.number + "," + this.email + ":"
+        return this.firstName + " " + this.lastName + ":" + this.phoneNumber + "," + this.email + ":"
                 + " address:" + this.address + ", state:" + this.state + ", city:" + this.city + ", zip:"
                 + this.zip;
     }
