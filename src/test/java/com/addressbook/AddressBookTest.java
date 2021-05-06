@@ -14,7 +14,7 @@ public class AddressBookTest {
     public void givenContactInAddressBookReturnTrue() {
         AddressBook addressBook = new AddressBook();
         Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com");
-        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts("Details", contacts);
+        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts();
         Assertions.assertEquals(1, contactsList.get("Details").size());
     }
 
@@ -22,7 +22,7 @@ public class AddressBookTest {
     public void givenEditNameInAddressBookWhenNameReturnTrue() {
         AddressBook addressBook = new AddressBook();
         Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com");
-        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts("Details", contacts);
+        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts();
         boolean result = addressBook.editContacts(contactsList, "Details", "Ram", "address", "Line-3");
         Assertions.assertTrue(result);
     }
@@ -31,7 +31,7 @@ public class AddressBookTest {
     public void givenEditNameInAddressBookWhenNameNotMatchReturnFalse() {
         AddressBook addressBook = new AddressBook();
         Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com");
-        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts("Details", contacts);
+        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts();
         boolean result = addressBook.editContacts(contactsList, "Details", "Ram", "address", "Line-3");
         Assertions.assertTrue(result);
     }
@@ -40,7 +40,7 @@ public class AddressBookTest {
     public void givenNameWhenDeleteShouldReturnTrue() {
         AddressBook addressBook = new AddressBook();
         Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com");
-        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts("Details", contacts);
+        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts();
         boolean result = addressBook.deleteContacts(contactsList, "Details", "Ram");
         Assertions.assertTrue(result);
     }
@@ -49,7 +49,7 @@ public class AddressBookTest {
     public void givenNameWhenNotDeleteShouldRetrunFalse() {
         AddressBook addressBook = new AddressBook();
         Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com");
-        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts("Details", contacts);
+        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts();
         boolean result = addressBook.deleteContacts(contactsList, "Family", "Ram");
         Assertions.assertTrue(result);
     }
@@ -83,5 +83,15 @@ public class AddressBookTest {
         contactDataList.add(new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com"));
         HashMap<String, List<Contacts>> contactsList = addressBook.addContactsList("Details", contactDataList);
         Assertions.assertNotEquals(3, contactsList.get("Details").size());
+    }
+
+    @Test
+    public void givenContactWhenSearchByCityShouldReturnTrue() {
+        AddressBook addressBook = new AddressBook();
+        List<Contacts> contactDataList = new ArrayList<>();
+        contactDataList.add(new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com"));
+        HashMap<String, List<Contacts>> contactsList = addressBook.addContactsList("Details", contactDataList);
+        Assertions.assertEquals(1, contactsList.get("Details").size());
+
     }
 }
