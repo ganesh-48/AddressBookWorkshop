@@ -12,7 +12,8 @@ import java.util.List;
 * Check a first name is match in address book then change details of that person.
 * Delete a contact using person first name ina address book.
 * Add Multiple contacts in address book.
-* Return the data contact list.*/
+* Return the data contact list.
+* Check a duplicate entry of same person in address book.*/
 public class AddressBook {
     public static List<Contacts> contactsList = new ArrayList<>();
     public static HashMap<String, List<Contacts>> addressBookMap = new HashMap<>();
@@ -31,6 +32,15 @@ public class AddressBook {
         }
         return addressBookMap;
     }
+
+    /*Check a duplicate entry of same person in address book.*/
+    private boolean checkDuplicate(HashMap<String, List<Contacts>> addressBookMap, String addressBookName, Contacts contacts) {
+        contactsList = addressBookMap.get(addressBookName);
+        long count = contactsList.stream().filter(data -> data.firstName.equals(contacts.firstName)).count();
+        if (count == 0) return true;
+        return false;
+    }
+
 
     /*Edit the contact details in address book.
     * Check a first name is match in address book then change details of that person.*/

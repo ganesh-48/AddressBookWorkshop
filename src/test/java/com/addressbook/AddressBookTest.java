@@ -63,4 +63,25 @@ public class AddressBookTest {
         HashMap<String, List<Contacts>> contactsList = addressBook.addContactsList("Details", contactDataList);
         Assertions.assertEquals(3, contactsList.get("Details").size());
     }
+
+    @Test
+    public void givenDuplicateEntryWhenDuplicateContactShouldReturnTrue() {
+        AddressBook addressBook = new AddressBook();
+        List<Contacts> contactDataList = new ArrayList<>();
+        contactDataList.add(new Contacts("Sai", "Sale", "saiPalace", "Solapur", "Maharashtra", 413102, 9654923567L, "sai@gmail.com"));
+        contactDataList.add(new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com"));
+        HashMap<String, List<Contacts>> contactsList = addressBook.addContactsList("Details", contactDataList);
+        Assertions.assertNotEquals(3, contactsList.get("Details").size());
+    }
+
+    @Test
+    public void givenDuplicateEntryWhenDuplicateContactShouldReturnFalse() {
+        AddressBook addressBook = new AddressBook();
+        List<Contacts> contactDataList = new ArrayList<>();
+        contactDataList.add(new Contacts("Sai", "Sale", "saiPalace", "Solapur", "Maharashtra", 413102, 9654923567L, "sai@gmail.com"));
+        contactDataList.add(new Contacts("Sai", "Sale", "saiPalace", "Solapur", "Maharashtra", 413102, 9654923567L, "sai@gmail.com"));
+        contactDataList.add(new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com"));
+        HashMap<String, List<Contacts>> contactsList = addressBook.addContactsList("Details", contactDataList);
+        Assertions.assertNotEquals(3, contactsList.get("Details").size());
+    }
 }
