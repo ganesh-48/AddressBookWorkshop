@@ -3,6 +3,7 @@ package com.addressbook;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddressBookTest {
@@ -52,5 +53,15 @@ public class AddressBookTest {
         List<Contacts> contactsList = addressBook.addContacts(contacts);
         List<Contacts> deleteContactList = addressBook.deleteContacts(contactsList, "Sai");
         Assertions.assertEquals(1, deleteContactList.size());
+    }
+
+    @Test
+    public void givenListOfMultipleContactsWhenAddedShouldReturnTrue() {
+        AddressBook addressBook = new AddressBook();
+        List<Contacts> contactDataList = new ArrayList<>();
+        contactDataList.add(new Contacts("Sai", "Salunkhe", "saiNiwas", "Solapur", "Maharashtra", 413102, 9654923567l, "sai@gmail.com"));
+        contactDataList.add(new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899, "abc@gmail.com"));
+        List<Contacts> contactList = addressBook.addMultipleContactsList(contactDataList);
+        Assertions.assertEquals(2, contactList.size());
     }
 }

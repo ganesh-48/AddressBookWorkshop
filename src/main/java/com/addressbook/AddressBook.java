@@ -9,7 +9,9 @@ import java.util.List;
 * Add a new contacts into a address book.
 * Edit the contact details in address book.
 * Check a first name is match in address book then change details of that person.
-* Delete a contact using person first name ina address book.*/
+* Delete a contact using person first name ina address book.
+* Add Multiple contacts in address book.
+* Return the data contact list.*/
 public class AddressBook {
     public List<Contacts> contactList;
 
@@ -84,5 +86,18 @@ public class AddressBook {
             e.printStackTrace();
         }
         return contactsList;
+    }
+
+    /*Add Multiple contacts in address book. */
+    public List<Contacts> addMultipleContactsList(List<Contacts> contactDataList) {
+        try {
+            for (Contacts contacts : contactDataList) {
+                addContacts(contacts);
+            }
+            return contactList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return contactDataList;
     }
 }
