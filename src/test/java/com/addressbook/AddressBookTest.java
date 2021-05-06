@@ -4,64 +4,63 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class AddressBookTest {
 
-    public void initialize() {
-        AddressBook addressBook;
-            }
+
     @Test
     public void givenContactInAddressBookReturnTrue() {
         AddressBook addressBook = new AddressBook();
-        Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899, "abc@gmail.com");
-        List<Contacts> result = addressBook.addContacts(contacts);
-        Assertions.assertEquals(result, "Ram");
+        Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com");
+        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts("Details", contacts);
+        Assertions.assertEquals(1, contactsList.get("Details").size());
     }
 
     @Test
     public void givenEditNameInAddressBookWhenNameReturnTrue() {
         AddressBook addressBook = new AddressBook();
-        Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899, "abc@gmail.com");
-        List<Contacts> result = addressBook.addContacts(contacts);
-        Contacts editContact = addressBook.editContacts(addressBook.contactList, "Ram", "address","editContacts");
-        Assertions.assertEquals("Line-3", editContact.address);
+        Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com");
+        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts("Details", contacts);
+        boolean result = addressBook.editContacts(contactsList, "Details", "Ram", "address", "Line-3");
+        Assertions.assertTrue(result);
     }
 
     @Test
     public void givenEditNameInAddressBookWhenNameNotMatchReturnFalse() {
         AddressBook addressBook = new AddressBook();
-        Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899, "abc@gmail.com");
-        List<Contacts> result = addressBook.addContacts(contacts);
-        Contacts editContacts = addressBook.editContacts(addressBook.contactList, "Ram", "address","contacts");
-        Assertions.assertEquals("Line-3", editContacts.address);
+        Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com");
+        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts("Details", contacts);
+        boolean result = addressBook.editContacts(contactsList, "Details", "Ram", "address", "Line-3");
+        Assertions.assertTrue(result);
     }
 
     @Test
     public void givenNameWhenDeleteShouldReturnTrue() {
         AddressBook addressBook = new AddressBook();
-        Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899, "abc@gmail.com");
-        List<Contacts> contactsList = addressBook.addContacts(contacts);
-        List<Contacts> deleteContactList = addressBook.deleteContacts(contactsList, "Ram");
-        Assertions.assertEquals(1, deleteContactList.size());
+        Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com");
+        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts("Details", contacts);
+        boolean result = addressBook.deleteContacts(contactsList, "Details", "Ram");
+        Assertions.assertTrue(result);
     }
 
     @Test
     public void givenNameWhenNotDeleteShouldRetrunFalse() {
         AddressBook addressBook = new AddressBook();
-        Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899, "abc@gmail.com");
-        List<Contacts> contactsList = addressBook.addContacts(contacts);
-        List<Contacts> deleteContactList = addressBook.deleteContacts(contactsList, "Sai");
-        Assertions.assertEquals(1, deleteContactList.size());
+        Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com");
+        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts("Details", contacts);
+        boolean result = addressBook.deleteContacts(contactsList, "Family", "Ram");
+        Assertions.assertTrue(result);
     }
 
     @Test
     public void givenListOfMultipleContactsWhenAddedShouldReturnTrue() {
         AddressBook addressBook = new AddressBook();
         List<Contacts> contactDataList = new ArrayList<>();
-        contactDataList.add(new Contacts("Sai", "Salunkhe", "saiNiwas", "Solapur", "Maharashtra", 413102, 9654923567l, "sai@gmail.com"));
-        contactDataList.add(new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899, "abc@gmail.com"));
-        List<Contacts> contactList = addressBook.addMultipleContactsList(contactDataList);
-        Assertions.assertEquals(2, contactList.size());
+        contactDataList.add(new Contacts("Sai", "Sale", "saiPalace", "Solapur", "Maharashtra", 413102, 9654923567L, "sai@gmail.com"));
+        contactDataList.add(new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com"));
+        HashMap<String, List<Contacts>> contactsList = addressBook.addContactsList("Details", contactDataList);
+        Assertions.assertEquals(3, contactsList.get("Details").size());
     }
 }
