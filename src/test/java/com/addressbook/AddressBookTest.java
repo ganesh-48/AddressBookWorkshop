@@ -1,15 +1,20 @@
 package com.addressbook;
 
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 
 public class AddressBookTest {
-
-    AddressBook addressBook = new AddressBook();
+    List<Contacts> addressBookContactList;
 
     @Test
-    public void givenPathWhenCheckedThenConfirmTrue() {
-        addressBook = new AddressBook();
+    public void givenThreeContactsInDB_WhenRetrieved_ShouldMatchEmployeeCount() {
+        AddressBookList addressBookList = new AddressBookList();
+        addressBookContactList = addressBookList.readAddressBookData(AddressBookList.IOService.DB_IO);
+        Assertions.assertEquals(3, addressBookContactList.size());
     }
+
 }
