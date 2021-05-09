@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 import java.util.stream.IntStream;
 
 public class AddressBookTest {
-    private static String HOME = System.getProperty("user.dir");
+    private static String HOME = System.getProperty("C:\\Users\\Ganesh\\CsvReader\\AddressBookIO");
     private static String checkContacts = "Contact Details";
 
     @Test
