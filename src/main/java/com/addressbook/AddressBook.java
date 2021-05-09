@@ -23,6 +23,8 @@ import java.util.List;
 public class AddressBook {
 
     private static AddressBook addressBook;
+    private static PreparedStatement addressBookDataStatement;
+    private static PreparedStatement prepareStatement;
 
     public static AddressBook getInstance() {
         if (addressBook == null)
@@ -47,19 +49,58 @@ public class AddressBook {
 
     public List<Contacts> getAddressBookDataUsingDB() {
         String sql = "SELECT * FROM address_book";
-        List<Contacts> contacts = new ArrayList<>();
+        List<Contacts> contactsList = new ArrayList<>();
         try (Connection connection = this.getConnection()) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
-            contacts = getAddressBookContactDataList(resultSet);
+            contactsList = this.getEmployeePayrollData(resultSet);
         } catch (SQLException e) {
-            System.out.println("Data can not fetch from address book" +e);
+            e.printStackTrace();
+        }
+        return contactsList;
+    }
+
+    /* @Description - Update contact update for a person */
+
+    public int updateContactDetails(String name, String address) {
+        String sql = String.format("update Address_Book set address = '%s' where firstName = '%s';", address, name);
+        try (Connection connection = this.getConnection()) {
+            Statement statement = connection.createStatement();
+            return statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    /* @Description - To get the data from employee payroll table using person name.*/
+
+    public List<Contacts> getEmployeePayroll(String name) {
+        List<Contacts> contacts = null;
+        String sql = "SELECT * FROM address_book WHERE firstName = ?";
+        if (this.addressBookDataStatement == null)
+            addressBookDataStatement = this.prepareStatementForAddressBook(sql);
+        try {
+            addressBookDataStatement.setString(1, name);
+            ResultSet resultSet = addressBookDataStatement.executeQuery();
+            contacts = this.getEmployeePayrollData(resultSet);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return contacts;
     }
 
-    private List<Contacts> getAddressBookContactDataList(ResultSet resultSet) {
+    private PreparedStatement prepareStatementForAddressBook(String sql) {
+        try {
+            Connection connection = this.getConnection();
+            PreparedStatement prepareStatement = connection.prepareStatement(sql);
+            return prepareStatement;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private List<Contacts> getEmployeePayrollData(ResultSet resultSet) {
         List<Contacts> contacts = new ArrayList<>();
         try {
             while (resultSet.next()) {
