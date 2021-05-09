@@ -3,130 +3,42 @@ package com.addressbook;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.IntStream;
 
 public class AddressBookTest {
-
-
-    @Test
-    public void givenContactInAddressBookReturnTrue() {
-        AddressBook addressBook = new AddressBook();
-        Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com");
-        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts("Details", contacts);
-        Assertions.assertEquals(1, contactsList.get("Details").size());
-    }
+    private static String HOME = System.getProperty("user.dir");
+    private static String checkContacts = "Contact Details";
 
     @Test
-    public void givenEditNameInAddressBookWhenNameReturnTrue() {
-        AddressBook addressBook = new AddressBook();
-        Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com");
-        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts();
-        boolean result = addressBook.editContacts(contactsList, "Details", "Ram", "address", "Line-3");
-        Assertions.assertTrue(result);
+    public void givenPathWhenCheckedThenConfirmTrue() throws IOException {
+        System.out.println(HOME);
+        Path homePath = Paths.get(HOME);
+        Assertions.assertTrue(Files.exists(homePath));
+
+        Path path = Paths.get(HOME + "/" + checkContacts);
+        if (Files.exists(path)) Files.delete(path);
+        Assertions.assertTrue(Files.notExists(path));
+        Files.createDirectories(path);
+        Assertions.assertTrue(Files.exists(path));
+        IntStream.range(1, 10).forEach(cntr -> {
+            Path tempFile = Paths.get(path + "/temp" + cntr);
+            Assertions.assertTrue(Files.notExists(tempFile));
+            try {
+                Files.createFile(tempFile);
+            } catch (IOException e) {
+            }
+            Assertions.assertTrue(Files.exists(tempFile));
+        });
+
+        Files.list(path).filter(Files::isRegularFile).forEach(System.out::println);
+        Files.newDirectoryStream(path).forEach(System.out::println);
+        Files.newDirectoryStream(path, path1 -> path.toFile().isFile() && path
+                .toString().startsWith("temp")).forEach(System.out::println);
     }
 
-    @Test
-    public void givenEditNameInAddressBookWhenNameNotMatchReturnFalse() {
-        AddressBook addressBook = new AddressBook();
-        Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com");
-        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts();
-        boolean result = addressBook.editContacts(contactsList, "Details", "Ram", "address", "Line-3");
-        Assertions.assertTrue(result);
-    }
 
-    @Test
-    public void givenNameWhenDeleteShouldReturnTrue() {
-        AddressBook addressBook = new AddressBook();
-        Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com");
-        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts();
-        boolean result = addressBook.deleteContacts(contactsList, "Details", "Ram");
-        Assertions.assertTrue(result);
-    }
-
-    @Test
-    public void givenNameWhenNotDeleteShouldRetrunFalse() {
-        AddressBook addressBook = new AddressBook();
-        Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com");
-        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts();
-        boolean result = addressBook.deleteContacts(contactsList, "Family", "Ram");
-        Assertions.assertTrue(result);
-    }
-
-    @Test
-    public void givenListOfMultipleContactsWhenAddedShouldReturnTrue() {
-        AddressBook addressBook = new AddressBook();
-        List<Contacts> contactDataList = new ArrayList<>();
-        contactDataList.add(new Contacts("Sai", "Sale", "saiPalace", "Solapur", "Maharashtra", 413102, 9654923567L, "sai@gmail.com"));
-        contactDataList.add(new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com"));
-        HashMap<String, List<Contacts>> contactsList = addressBook.addContactsList("Details", contactDataList);
-        Assertions.assertEquals(3, contactsList.get("Details").size());
-    }
-
-    @Test
-    public void givenDuplicateEntryWhenDuplicateContactShouldReturnTrue() {
-        AddressBook addressBook = new AddressBook();
-        List<Contacts> contactDataList = new ArrayList<>();
-        contactDataList.add(new Contacts("Sai", "Sale", "saiPalace", "Solapur", "Maharashtra", 413102, 9654923567L, "sai@gmail.com"));
-        contactDataList.add(new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com"));
-        HashMap<String, List<Contacts>> contactsList = addressBook.addContactsList("Details", contactDataList);
-        Assertions.assertNotEquals(3, contactsList.get("Details").size());
-    }
-
-    @Test
-    public void givenDuplicateEntryWhenDuplicateContactShouldReturnFalse() {
-        AddressBook addressBook = new AddressBook();
-        List<Contacts> contactDataList = new ArrayList<>();
-        contactDataList.add(new Contacts("Sai", "Sale", "saiPalace", "Solapur", "Maharashtra", 413102, 9654923567L, "sai@gmail.com"));
-        contactDataList.add(new Contacts("Sai", "Sale", "saiPalace", "Solapur", "Maharashtra", 413102, 9654923567L, "sai@gmail.com"));
-        contactDataList.add(new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com"));
-        HashMap<String, List<Contacts>> contactsList = addressBook.addContactsList("Details", contactDataList);
-        Assertions.assertNotEquals(3, contactsList.get("Details").size());
-    }
-
-    @Test
-    public void givenContactWhenSearchByCityShouldReturnTrue() {
-        AddressBook addressBook = new AddressBook();
-        List<Contacts> contactDataList = new ArrayList<>();
-        contactDataList.add(new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com"));
-        HashMap<String, List<Contacts>> contactsList = addressBook.addContactsList("Details", contactDataList);
-        Assertions.assertEquals(1, contactsList.get("Details").size());
-    }
-
-    @Test
-    public void givenContactWhenSearchByStateShouldReturnTrue() {
-        AddressBook addressBook = new AddressBook();
-        List<Contacts> contactDataList = new ArrayList<>();
-        contactDataList.add(new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com"));
-        HashMap<String, List<Contacts>> contactsList = addressBook.addContactsList("Details", contactDataList);
-        Assertions.assertEquals(1, contactsList.get("Details").size());
-    }
-
-    @Test
-    public void givenContactWhenViewByCityShouldReturnTrue() {
-        AddressBook addressBook = new AddressBook();
-        List<Contacts> contactDataList = new ArrayList<>();
-        contactDataList.viewPersonByCity(new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com"));
-        HashMap<String, List<Contacts>> contactsList = addressBook.addContactsList("Details", contactDataList);
-        Assertions.assertEquals(1, contactsList.get("Details").size());
-    }
-
-    @Test
-    public void givenContactWhenViewByStateShouldReturnTrue() {
-        AddressBook addressBook = new AddressBook();
-        List<Contacts> contactDataList = new ArrayList<>();
-        contactDataList.viewPersonByState(new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com"));
-        HashMap<String, List<Contacts>> contactsList = addressBook.addContactsList("Details", contactDataList);
-        Assertions.assertEquals(1, contactsList.get("Details").size());
-    }
-
-    @Test
-    public void givenContactWhenCountByCityShouldReturnTrue() {
-        AddressBook addressBook = new AddressBook();
-        List<Contacts> contactDataList = new ArrayList<>();
-        contactDataList.CountPersonByCity(new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com"));
-        HashMap<String, List<Contacts>> contactsList = addressBook.addContactsList("Details", contactDataList);
-        Assertions.assertEquals(1, contactsList.get("Details").size());
-    }
 }
