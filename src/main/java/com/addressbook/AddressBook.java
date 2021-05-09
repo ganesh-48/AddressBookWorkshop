@@ -1,6 +1,7 @@
 package com.addressbook;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /*@Description-Creating a Address Book.
 * Welcome to address book.
@@ -53,9 +54,15 @@ public class AddressBook {
                 case 6:
                     addressbook.viewPersonByState();
                     break;
+                case 7:
+                    addressbook.countPersonByCity();
+                    break;
+                case 8:
+                    addressbook.countPersonByState();
+                    break;
                 default:
                     System.out.println("Exit form address book");
-                    choice = 7;
+                    choice = 9;
                     break;
             }
         }
@@ -229,5 +236,26 @@ public class AddressBook {
         for (Enumeration i = dictWithState.keys(); i.hasMoreElements(); ) {
             System.out.println(i.nextElement());
         }
+    }
+
+    /*  count  person by city name */
+    public void countPersonByCity() {
+        System.out.println("Enter the city to count person.");
+        String stateName = scanner.next();
+        String cityName;
+        System.out.println("Person count by " + cityName);
+        Collection<Contacts> values = contacts.values();
+        ArrayList<Contacts> conatactlist = new ArrayList<>(values);
+        System.out.println(conatactlist.stream().collect(Collectors.groupingBy((Contacts C) -> C.getCity(),Collectors.counting())));
+    }
+
+    /* count  person by state name */
+    public void countPersonByState() {
+        System.out.println("Enter the state to count person.");
+        String stateName = scanner.next();
+        System.out.println("Person count by " + stateName);
+        Collection<Contacts> values = contacts.values();
+        ArrayList<Contacts> conatactlist = new ArrayList<>(values);
+        System.out.println(conatactlist.stream().collect(Collectors.groupingBy((Contacts C) -> C.getState(),Collectors.counting())));
     }
 }

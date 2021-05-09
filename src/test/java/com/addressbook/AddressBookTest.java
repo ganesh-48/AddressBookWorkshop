@@ -120,4 +120,13 @@ public class AddressBookTest {
         HashMap<String, List<Contacts>> contactsList = addressBook.addContactsList("Details", contactDataList);
         Assertions.assertEquals(1, contactsList.get("Details").size());
     }
+
+    @Test
+    public void givenContactWhenCountByCityShouldReturnTrue() {
+        AddressBook addressBook = new AddressBook();
+        List<Contacts> contactDataList = new ArrayList<>();
+        contactDataList.CountPersonByCity(new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com"));
+        HashMap<String, List<Contacts>> contactsList = addressBook.addContactsList("Details", contactDataList);
+        Assertions.assertEquals(1, contactsList.get("Details").size());
+    }
 }
