@@ -14,7 +14,7 @@ public class AddressBookTest {
     public void givenContactInAddressBookReturnTrue() {
         AddressBook addressBook = new AddressBook();
         Contacts contacts = new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com");
-        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts();
+        HashMap<String, List<Contacts>> contactsList = addressBook.addContacts("Details", contacts);
         Assertions.assertEquals(1, contactsList.get("Details").size());
     }
 
@@ -92,6 +92,32 @@ public class AddressBookTest {
         contactDataList.add(new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com"));
         HashMap<String, List<Contacts>> contactsList = addressBook.addContactsList("Details", contactDataList);
         Assertions.assertEquals(1, contactsList.get("Details").size());
+    }
 
+    @Test
+    public void givenContactWhenSearchByStateShouldReturnTrue() {
+        AddressBook addressBook = new AddressBook();
+        List<Contacts> contactDataList = new ArrayList<>();
+        contactDataList.add(new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com"));
+        HashMap<String, List<Contacts>> contactsList = addressBook.addContactsList("Details", contactDataList);
+        Assertions.assertEquals(1, contactsList.get("Details").size());
+    }
+
+    @Test
+    public void givenContactWhenViewByCityShouldReturnTrue() {
+        AddressBook addressBook = new AddressBook();
+        List<Contacts> contactDataList = new ArrayList<>();
+        contactDataList.viewPersonByCity(new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com"));
+        HashMap<String, List<Contacts>> contactsList = addressBook.addContactsList("Details", contactDataList);
+        Assertions.assertEquals(1, contactsList.get("Details").size());
+    }
+
+    @Test
+    public void givenContactWhenViewByStateShouldReturnTrue() {
+        AddressBook addressBook = new AddressBook();
+        List<Contacts> contactDataList = new ArrayList<>();
+        contactDataList.viewPersonByState(new Contacts("Ram", "Sharma", "Line - 3", "maharashtra", "solapur", 123456, 1234567899L, "abc@gmail.com"));
+        HashMap<String, List<Contacts>> contactsList = addressBook.addContactsList("Details", contactDataList);
+        Assertions.assertEquals(1, contactsList.get("Details").size());
     }
 }

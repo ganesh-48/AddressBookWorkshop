@@ -48,10 +48,10 @@ public class AddressBook {
                     addressbook.createNewAddressBook();
                     break;
                 case 5:
-                    addressbook.searchPersonByCity();
+                    addressbook.viewPersonByCity();
                     break;
                 case 6:
-                    addressbook.searchPersonByState();
+                    addressbook.viewPersonByState();
                     break;
                 default:
                     System.out.println("Exit form address book");
@@ -201,12 +201,12 @@ public class AddressBook {
         return addressBookMap;
     }
 
-    /*Search person by city*/
-    public void searchPersonByCity() {
-        System.out.println("Enter the city to search person.");
+    /*view person by city*/
+    public void viewPersonByCity() {
+        System.out.println("Enter the city to View person.");
         String cityName = scanner.next();
-        System.out.println("Person Search by " + cityName);
-        Collection<Contacts> values = contacts.values();
+        System.out.println("Person view by " + cityName);
+        Collection<Contacts> values = Contacts.values();
         ArrayList<Contacts> conatactslist
                 = new ArrayList<>(values);
         Dictionary dictWithCity = new Hashtable();
@@ -216,11 +216,11 @@ public class AddressBook {
         }
     }
 
-    /*Search Person by state*/
-    public void searchPersonByState() {
-        System.out.println("Enter the state to search person.");
+    /*View Person by state*/
+    public void viewPersonByState() {
+        System.out.println("Enter the state to view person.");
         String stateName = scanner.next();
-        System.out.println("Person Search by " + stateName);
+        System.out.println("Person view by " + stateName);
         Collection<Contacts> values = contacts.values();
         ArrayList<Contacts> conatactslist
                 = new ArrayList<>(values);
@@ -230,5 +230,4 @@ public class AddressBook {
             System.out.println(i.nextElement());
         }
     }
-
 }
