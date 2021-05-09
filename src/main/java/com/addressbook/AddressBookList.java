@@ -49,4 +49,8 @@ public class AddressBookList {
     public List<Contacts> countByState(String state) {
         return addressBook.getCountByState(state);
     }
+
+    public void addContact(String firstName, String lastName, String address, String city, String state, int zip, long phoneNumber, String email) {
+        addressBookList.add(addressBook.addContact(firstName, lastName, address, city, state, zip, phoneNumber, email));
+    }
 }
