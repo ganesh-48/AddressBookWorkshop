@@ -258,4 +258,21 @@ public class AddressBook {
         ArrayList<Contacts> conatactlist = new ArrayList<>(values);
         System.out.println(conatactlist.stream().collect(Collectors.groupingBy((Contacts C) -> C.getState(),Collectors.counting())));
     }
+
+    /*sort the entries in address book  alphabetically by Person’s name.
+    * First print a contact list of person without sorting.
+    * Then sort the contact list by alphabetically order by persons name.*/
+    public void sortPersonByFirstname(){
+        Collection<Contacts> values = contacts.values();
+        ArrayList<Contacts> conatactlist
+                = new ArrayList<>(values);
+        System.out.println("Contact list before sorting the list");
+        for (Contacts cont : conatactlist){
+            System.out.println(cont.getFirstName() + cont.getLastName());
+        }
+        System.out.println("Contact list after sorting the list");
+        conatactlist.stream();
+        conatactlist.sort(Comparator.comparing(Contacts::getFirstName));
+        conatactlist.forEach((Contacts cont) -> System.out.println(cont.getFirstName() + " " + cont.getLastName()));
+    }
 }
