@@ -119,4 +119,36 @@ public class AddressBook {
         }
         return contacts;
     }
+
+    /* @Description- get count of Contacts in the Database by City */
+    public List<Contacts> getCountByCity(String city) {
+        List<Contacts> contacts = new ArrayList<>();
+        String sql = String.format("SELECT * FROM address_book where city = '%s';", city);
+        try (Connection connection = this.getConnection()){
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            contacts = this.getEmployeePayrollData(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contacts;
+    }
+
+    /* @Description-get count of Contacts in the Database by state */
+
+    public List<Contacts> getCountByState(String state) {
+        List<Contacts> contacts = new ArrayList<>();
+        String sql = String.format("SELECT * FROM Address_Book where state = '%s';", state);
+        try (Connection connection = this.getConnection()){
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            contacts = this.getEmployeePayrollData(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return contacts;
+    }
 }
+
+

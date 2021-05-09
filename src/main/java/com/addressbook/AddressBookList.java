@@ -41,4 +41,12 @@ public class AddressBookList {
             return this.addressBookList.stream().filter(employeePayrollDataItem ->
                     employeePayrollDataItem.firstName.equals(name)).findFirst().orElse(null);
         }
+
+    public List<Contacts> countByCity(String city) {
+        return addressBook.getCountByCity(city);
+    }
+
+    public List<Contacts> countByState(String state) {
+        return addressBook.getCountByState(state);
+    }
 }
